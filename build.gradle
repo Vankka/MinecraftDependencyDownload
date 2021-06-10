@@ -5,7 +5,7 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '7.0.0'
 }
 
-version '1.0.0'
+version '1.0.0-SNAPSHOT'
 
 subprojects {
     apply plugin: 'java'
@@ -13,14 +13,20 @@ subprojects {
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
-
-    repositories {
-        mavenCentral()
-        mavenLocal() // TODO
-    }
     
     group = 'dev.vankka.MinecraftDependencyDownload'
     version = rootProject.version
+
+    repositories {
+        mavenCentral()
+
+        if (version.endsWith('-SNAPSHOT')) {
+            mavenLocal()
+            maven {
+                url 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
+            }
+        }
+    }
 
     license {
         header = rootProject.file('LICENSE_HEADER')
