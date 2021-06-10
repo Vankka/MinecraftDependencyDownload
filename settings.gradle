@@ -1,0 +1,22 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        maven {
+            url = 'https://maven.fabricmc.net/'
+        }
+    }
+}
+
+rootProject.name = 'MinecraftDependencyDownload'
+
+[
+    'common',
+    'jarinjar', 'jarinjar:common', 'jarinjar:bootstrap', 'jarinjar:loader',
+    'bukkit', 'bukkit:loader',
+    'bungee', 'bungee:loader',
+    'fabric',
+    'velocity'
+].each {
+    include it
+    findProject(":" + it).name = String.join('-', it.split(':'))
+}

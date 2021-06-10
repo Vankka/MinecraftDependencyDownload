@@ -1,0 +1,21 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+allprojects {
+    repositories {
+        maven {
+            url 'https://oss.sonatype.org/content/groups/public/'
+        }
+        maven {
+            url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+        }
+    }
+
+    dependencies {
+        compileOnly 'net.md-5:bungeecord-api:1.16-R0.4'
+    }
+}
+
+dependencies {
+    api project(':jarinjar:jarinjar-bootstrap')
+    compileOnlyApi project(':bungee:bungee-loader')
+}

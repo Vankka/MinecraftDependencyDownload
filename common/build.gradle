@@ -1,0 +1,3 @@
+dependencies {
+    api 'dev.vankka.DependencyDownload:runtime:1.0.2-SNAPSHOT'
+}

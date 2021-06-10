@@ -1,0 +1,100 @@
+plugins {
+    id 'java'
+    id 'java-library'
+    id 'org.cadixdev.licenser' version '0.6.0'
+    id 'com.github.johnrengelman.shadow' version '7.0.0'
+}
+
+version '1.0.0'
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'java-library'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    repositories {
+        mavenCentral()
+        mavenLocal() // TODO
+    }
+    
+    group = 'dev.vankka.MinecraftDependencyDownload'
+    version = rootProject.version
+
+    license {
+        header = rootProject.file('LICENSE_HEADER')
+        properties {
+            String inception = '2021'
+            String currentYear = Calendar.getInstance().get(Calendar.YEAR)
+
+            year = inception == currentYear ? currentYear : inception + "-" + currentYear
+        }
+        include '**/*.java' // only java files
+    }
+
+    task publishProject {
+        apply plugin: 'maven-publish'
+        apply plugin: 'signing'
+
+        dependsOn tasks.build
+
+        publishing {
+            publications {
+                maven(MavenPublication) {
+                    from components.java
+
+                    pom {
+                        name = project.name
+                        packaging = 'jar'
+                        description = 'A library to download & load dependencies during runtime for Minecraft mods & plugins'
+                        url = 'https://github.com/Vankka/MinecraftDependencyDownload'
+
+                        scm {
+                            connection = 'scm:git:https://github.com/Vankka/MinecraftDependencyDownload.git'
+                            developerConnection = 'scm:git:https://github.com/Vankka/MinecraftDependencyDownload.git'
+                            url = 'https://github.com/Vankka/MinecraftDependencyDownload'
+                        }
+
+                        licenses {
+                            license {
+                                name = 'MIT License'
+                                url = 'https://www.opensource.org/licenses/mit-license.php'
+                            }
+                        }
+
+                        developers {
+                            developer {
+                                id = 'Vankka'
+                            }
+                        }
+                    }
+                }
+            }
+
+            signing {
+                sign publishing.publications.maven
+
+                def key = System.getenv('SONATYPE_KEY')
+                if (key != null) {
+                    useInMemoryPgpKeys(key, System.getenv('SONATYPE_KEY_PASS'))
+                }
+            }
+
+            repositories {
+                maven {
+                    credentials {
+                        username findProperty('ossrhUsername')
+                        password findProperty('ossrhPassword')
+                    }
+                    url version.endsWith('-SNAPSHOT')
+                            ? 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
+                            : 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+                }
+            }
+        }
+
+        finalizedBy publish
+    }
+}
+

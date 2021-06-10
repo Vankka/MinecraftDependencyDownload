@@ -1,0 +1,16 @@
+repositories {
+    maven {
+        url 'https://repo.velocitypowered.com/releases/'
+    }
+    maven {
+        url 'https://libraries.minecraft.net/'
+    }
+    maven {
+        url 'https://repo.spongepowered.org/maven/'
+    }
+}
+
+dependencies {
+    compileOnly 'com.velocitypowered:velocity-api:1.1.0'
+    api project(':common')
+}
