@@ -22,7 +22,14 @@ public abstract class BukkitLoader extends JavaPlugin implements ILoader {
     }
 
     @Override
-    public void initiateBootstrap(Class<?> bootstrapClass, JarInJarClassLoader classLoader) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    public final void initialize() {
+        ILoader.super.initialize();
+    }
+
+    @Override
+    public final void initiateBootstrap(Class<?> bootstrapClass, JarInJarClassLoader classLoader)
+            throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+
         Constructor<?> constructor = bootstrapClass.getConstructor(JarInJarClassLoader.class, JavaPlugin.class);
         bootstrap = (IBukkitBootstrap) constructor.newInstance(classLoader, this);
     }

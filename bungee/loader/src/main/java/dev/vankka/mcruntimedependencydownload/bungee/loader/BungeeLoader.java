@@ -22,6 +22,11 @@ public abstract class BungeeLoader extends Plugin implements ILoader {
     }
 
     @Override
+    public final void initialize() {
+        ILoader.super.initialize();
+    }
+
+    @Override
     public final void initiateBootstrap(Class<?> bootstrapClass, JarInJarClassLoader classLoader)
             throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
 
