@@ -1,4 +1,4 @@
-package dev.vankka.mcdependencydownload.bukkit.boostrap;
+package dev.vankka.mcdependencydownload.bukkit.bootstrap;
 
 public interface IBukkitBootstrap {
 
