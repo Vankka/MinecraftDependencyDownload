@@ -11,7 +11,7 @@ import java.nio.file.Path;
  * Utility {@link ClassLoader} to load classes onto a seperate classpath as the main application.
  * Extends {@link ClasspathAppender} for use with {@link dev.vankka.dependencydownload.DependencyManager}.
  */
-@SuppressWarnings("unused")
+@SuppressWarnings("unused") // API
 public class IsolatedClassLoader extends URLClassLoader implements ClasspathAppender {
 
     static {

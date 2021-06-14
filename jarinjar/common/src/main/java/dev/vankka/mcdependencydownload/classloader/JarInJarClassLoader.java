@@ -1,20 +1,22 @@
 package dev.vankka.mcdependencydownload.classloader;
 
-import dev.vankka.dependencydownload.classpath.ClasspathAppender;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 /**
  * Loads a jar from a resource into a temporary file to avoid illegal reflection.
- * Extends {@link ClasspathAppender} for use with {@link dev.vankka.dependencydownload.DependencyManager}.
+ * @see dev.vankka.mcdependencydownload.classpath.JarInJarClasspathAppender
  */
-public class JarInJarClassLoader extends URLClassLoader implements ClasspathAppender {
+@SuppressWarnings("JavadocReference") // Not available here
+public class JarInJarClassLoader extends URLClassLoader {
 
     static {
         ClassLoader.registerAsParallelCapable();
@@ -56,8 +58,8 @@ public class JarInJarClassLoader extends URLClassLoader implements ClasspathAppe
         }
     }
 
-    @Override
-    public void appendFileToClasspath(Path path) throws MalformedURLException {
+    public void addURL(Path path) throws MalformedURLException {
         addURL(path.toUri().toURL());
     }
+
 }

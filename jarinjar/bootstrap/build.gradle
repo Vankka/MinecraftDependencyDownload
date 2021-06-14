@@ -1,3 +1,4 @@
 dependencies {
+    api project(':common')
     compileOnlyApi project(':jarinjar:jarinjar-common')
 }

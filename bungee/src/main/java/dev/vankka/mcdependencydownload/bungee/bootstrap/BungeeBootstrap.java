@@ -2,6 +2,7 @@ package dev.vankka.mcdependencydownload.bungee.bootstrap;
 
 import dev.vankka.mcdependencydownload.bootstrap.AbstractBootstrap;
 import dev.vankka.mcdependencydownload.classloader.JarInJarClassLoader;
+import dev.vankka.mcdependencydownload.classpath.JarInJarClasspathAppender;
 import net.md_5.bungee.api.plugin.Plugin;
 
 /**
@@ -11,6 +12,7 @@ import net.md_5.bungee.api.plugin.Plugin;
 public abstract class BungeeBootstrap extends AbstractBootstrap implements IBungeeBootstrap {
 
     private final Plugin plugin;
+    private final JarInJarClasspathAppender classpathAppender;
 
     /**
      * Do not modify the parameters if you're using the BungeeLoader.
@@ -21,6 +23,7 @@ public abstract class BungeeBootstrap extends AbstractBootstrap implements IBung
     public BungeeBootstrap(JarInJarClassLoader classLoader, Plugin plugin) {
         super(classLoader);
         this.plugin = plugin;
+        this.classpathAppender = new JarInJarClasspathAppender(classLoader);
     }
 
     /**
@@ -31,7 +34,11 @@ public abstract class BungeeBootstrap extends AbstractBootstrap implements IBung
         return plugin;
     }
 
-    public void onLoad() {}
-    public void onEnable() {}
-    public void onDisable() {}
+    /**
+     * Gets a instance of {@link JarInJarClassLoader} that was created with the {@link JarInJarClassLoader} that loaded this class.
+     * @return a {@link JarInJarClassLoader}
+     */
+    public JarInJarClasspathAppender getClasspathAppender() {
+        return classpathAppender;
+    }
 }
