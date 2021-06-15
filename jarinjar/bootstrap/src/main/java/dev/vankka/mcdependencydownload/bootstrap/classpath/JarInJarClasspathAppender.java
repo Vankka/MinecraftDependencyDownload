@@ -1,4 +1,4 @@
-package dev.vankka.mcdependencydownload.classpath;
+package dev.vankka.mcdependencydownload.bootstrap.classpath;
 
 import dev.vankka.dependencydownload.classpath.ClasspathAppender;
 import dev.vankka.mcdependencydownload.classloader.JarInJarClassLoader;

@@ -18,5 +18,5 @@ rootProject.name = 'MinecraftDependencyDownload'
     'velocity'
 ].each {
     include it
-    findProject(":" + it).name = String.join('-', it.split(':'))
+    findProject(':' + it).name = String.join('-', it.split(':'))
 }

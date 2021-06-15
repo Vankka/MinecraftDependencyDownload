@@ -13,7 +13,7 @@ import java.nio.file.StandardCopyOption;
 
 /**
  * Loads a jar from a resource into a temporary file to avoid illegal reflection.
- * @see dev.vankka.mcdependencydownload.classpath.JarInJarClasspathAppender
+ * @see dev.vankka.mcdependencydownload.bootstrap.classpath.JarInJarClasspathAppender
  */
 @SuppressWarnings("JavadocReference") // Not available here
 public class JarInJarClassLoader extends URLClassLoader {
