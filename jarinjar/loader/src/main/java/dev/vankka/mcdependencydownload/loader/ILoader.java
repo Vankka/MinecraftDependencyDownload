@@ -1,7 +1,9 @@
 package dev.vankka.mcdependencydownload.loader;
 
 import dev.vankka.mcdependencydownload.classloader.JarInJarClassLoader;
-import dev.vankka.mcdependencydownload.exception.LoadingException;
+import dev.vankka.mcdependencydownload.loader.exception.LoadingException;
+import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.MustBeInvokedByOverriders;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -16,6 +18,8 @@ public interface ILoader {
      * Initializes the {@link JarInJarClassLoader} and loads in the {@link #getBootstrapClassName()}, and then calls {@link #initiateBootstrap(Class, JarInJarClassLoader)} with that class the the class loader made previously.
      * @throws LoadingException if initialization fails
      */
+    @MustBeInvokedByOverriders
+    @ApiStatus.NonExtendable
     default void initialize() {
         try {
             JarInJarClassLoader classLoader = new JarInJarClassLoader(getName(), getJarInJarResource(), getParentClassLoader());
