@@ -36,8 +36,16 @@ public interface ILoader {
                 }
             }, getName() + " JarInJarClassLoader ShutdownHook"));
         } catch (Throwable t) {
-            throw new LoadingException("Unable to load JarInJar", t);
+            handleLoadingException(new LoadingException("Unable to load JarInJar", t));
         }
+    }
+
+    /**
+     * {@link LoadingException} handler for this {@link ILoader}, by default the exception is simply thrown into the constructor through {@link #initialize()}.
+     * @param exception the loading exception
+     */
+    default void handleLoadingException(LoadingException exception) {
+        throw exception;
     }
 
     /**
