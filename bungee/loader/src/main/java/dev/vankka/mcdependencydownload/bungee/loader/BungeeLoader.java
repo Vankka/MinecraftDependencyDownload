@@ -7,6 +7,7 @@ import net.md_5.bungee.api.plugin.Plugin;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Optional;
 
 /**
  * The loader class, the class that extends this should be the bungee.ymls main property.
@@ -19,6 +20,10 @@ public abstract class BungeeLoader extends Plugin implements ILoader {
     public BungeeLoader() {
         super();
         initialize();
+    }
+
+    private Optional<IBungeeBootstrap> bootstrap() {
+        return Optional.ofNullable(bootstrap);
     }
 
     @Override
@@ -46,16 +51,16 @@ public abstract class BungeeLoader extends Plugin implements ILoader {
 
     @Override
     public final void onLoad() {
-        bootstrap.onLoad();
+        bootstrap().ifPresent(IBungeeBootstrap::onLoad);
     }
 
     @Override
     public final void onEnable() {
-        bootstrap.onEnable();
+        bootstrap().ifPresent(IBungeeBootstrap::onEnable);
     }
 
     @Override
     public final void onDisable() {
-        bootstrap.onDisable();
+        bootstrap().ifPresent(IBungeeBootstrap::onDisable);
     }
 }

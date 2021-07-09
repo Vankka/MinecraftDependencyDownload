@@ -7,6 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Optional;
 
 /**
  * The loader class, the lass that extends this should be the plugin.ymls main property.
@@ -19,6 +20,10 @@ public abstract class BukkitLoader extends JavaPlugin implements ILoader {
     public BukkitLoader() {
         super();
         initialize();
+    }
+
+    private Optional<IBukkitBootstrap> bootstrap() {
+        return Optional.ofNullable(bootstrap);
     }
 
     @Override
@@ -41,16 +46,16 @@ public abstract class BukkitLoader extends JavaPlugin implements ILoader {
 
     @Override
     public final void onLoad() {
-        bootstrap.onLoad();
+        bootstrap().ifPresent(IBukkitBootstrap::onLoad);
     }
 
     @Override
     public final void onEnable() {
-        bootstrap.onEnable();
+        bootstrap().ifPresent(IBukkitBootstrap::onEnable);
     }
 
     @Override
     public final void onDisable() {
-        bootstrap.onDisable();
+        bootstrap().ifPresent(IBukkitBootstrap::onDisable);
     }
 }
