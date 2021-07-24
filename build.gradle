@@ -14,7 +14,7 @@ subprojects {
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
     
-    group = 'dev.vankka.MinecraftDependencyDownload'
+    group = 'dev.vankka.minecraftdependencydownload'
     version = rootProject.version
 
     repositories {
