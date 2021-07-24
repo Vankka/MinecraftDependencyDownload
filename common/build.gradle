@@ -1,4 +1,4 @@
 dependencies {
     compileOnlyApi 'org.jetbrains:annotations:21.0.1'
-    api 'dev.vankka.DependencyDownload:runtime:1.0.1'
+    api 'dev.vankka.dependencydownload:runtime:1.0.3-SNAPSHOT'
 }
