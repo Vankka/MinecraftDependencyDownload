@@ -11,7 +11,6 @@ rootProject.name = 'MinecraftDependencyDownload'
 
 [
     'common',
-    'jarinjar', 'jarinjar:common', 'jarinjar:bootstrap', 'jarinjar:loader',
     'bukkit', 'bukkit:loader',
     'bungee', 'bungee:loader',
     'fabric',

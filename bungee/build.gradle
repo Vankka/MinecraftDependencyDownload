@@ -16,6 +16,6 @@ allprojects {
 }
 
 dependencies {
-    api project(':jarinjar:jarinjar-bootstrap')
+    api 'dev.vankka.dependencydownload:jarinjar-bootstrap:' + dependencyDownloadVersion
     compileOnlyApi project(':bungee:bungee-loader')
 }
