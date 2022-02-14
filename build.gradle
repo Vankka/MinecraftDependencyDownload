@@ -15,10 +15,10 @@ subprojects {
     targetCompatibility = 1.8
 
     ext {
-        dependencyDownloadVersion = '1.1.1'
+        dependencyDownloadVersion = '1.2.1'
     }
 
-    group = 'dev.vankka.minecraftdependencydownload'
+    group = 'dev.vankka'
     version = rootProject.version
 
     repositories {
@@ -54,8 +54,9 @@ subprojects {
                 maven(MavenPublication) {
                     from components.java
 
+                    artifactId = 'minecraftdependencydownload-' + project.name
                     pom {
-                        name = project.name
+                        name = 'minecraftdependencydownload-' + project.name
                         packaging = 'jar'
                         description = 'A library to download & load dependencies during runtime for Minecraft mods & plugins'
                         url = 'https://github.com/Vankka/MinecraftDependencyDownload'

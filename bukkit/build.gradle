@@ -11,7 +11,7 @@ allprojects {
 }
 
 dependencies {
-    api 'dev.vankka.dependencydownload:jarinjar-bootstrap:' + dependencyDownloadVersion
+    api 'dev.vankka:dependencydownload-jarinjar-bootstrap:' + dependencyDownloadVersion
     compileOnlyApi project(':bukkit:bukkit-loader')
 }
 
