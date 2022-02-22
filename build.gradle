@@ -15,7 +15,7 @@ subprojects {
     targetCompatibility = 1.8
 
     ext {
-        dependencyDownloadVersion = '1.2.1'
+        dependencyDownloadVersion = '1.2.2-SNAPSHOT'
     }
 
     group = 'dev.vankka'
@@ -25,10 +25,7 @@ subprojects {
         mavenCentral()
 
         if (version.endsWith('-SNAPSHOT')) {
-            mavenLocal()
-            maven {
-                url 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
-            }
+            maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
         }
     }
 

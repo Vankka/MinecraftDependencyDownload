@@ -4,9 +4,10 @@ import dev.vankka.mcdependencydownload.bungee.bootstrap.IBungeeBootstrap;
 import dev.vankka.mcdependencydownload.classloader.JarInJarClassLoader;
 import dev.vankka.mcdependencydownload.loader.ILoader;
 import net.md_5.bungee.api.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Optional;
 
 /**
@@ -15,37 +16,37 @@ import java.util.Optional;
 @SuppressWarnings("unused") // API
 public abstract class BungeeLoader extends Plugin implements ILoader {
 
+    protected final JarInJarClassLoader classLoader;
     private IBungeeBootstrap bootstrap;
 
     public BungeeLoader() {
         super();
-        initialize();
+        this.classLoader = initialize();
     }
 
     private Optional<IBungeeBootstrap> bootstrap() {
         return Optional.ofNullable(bootstrap);
     }
 
+    @SuppressWarnings("NonExtendableApiUsage") // final
     @Override
-    public final void initialize() {
-        ILoader.super.initialize();
+    public final JarInJarClassLoader initialize() {
+        return ILoader.super.initialize();
     }
 
     @Override
-    public final void initiateBootstrap(Class<?> bootstrapClass, JarInJarClassLoader classLoader)
-            throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
-
+    public final void initiateBootstrap(Class<?> bootstrapClass, @NotNull JarInJarClassLoader classLoader) throws ReflectiveOperationException {
         Constructor<?> constructor = bootstrapClass.getConstructor(JarInJarClassLoader.class, Plugin.class);
         bootstrap = (IBungeeBootstrap) constructor.newInstance(classLoader, this);
     }
 
     @Override
-    public final String getName() {
+    public final @NotNull String getName() {
         return getDescription().getName();
     }
 
     @Override
-    public final ClassLoader getParentClassLoader() {
+    public final @NotNull ClassLoader getParentClassLoader() {
         return getClass().getClassLoader();
     }
 
@@ -62,5 +63,15 @@ public abstract class BungeeLoader extends Plugin implements ILoader {
     @Override
     public final void onDisable() {
         bootstrap().ifPresent(IBungeeBootstrap::onDisable);
+        close();
+    }
+
+    protected void close() {
+        try {
+            classLoader.close();
+        } catch (IOException e) {
+            getLogger().severe("Failed to close JarInJarClassLoader");
+            e.printStackTrace();
+        }
     }
 }
