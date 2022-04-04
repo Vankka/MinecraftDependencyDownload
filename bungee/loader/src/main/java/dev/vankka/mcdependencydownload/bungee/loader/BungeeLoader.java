@@ -1,8 +1,8 @@
 package dev.vankka.mcdependencydownload.bungee.loader;
 
+import dev.vankka.dependencydownload.jarinjar.classloader.JarInJarClassLoader;
+import dev.vankka.dependencydownload.jarinjar.loader.ILoader;
 import dev.vankka.mcdependencydownload.bungee.bootstrap.IBungeeBootstrap;
-import dev.vankka.mcdependencydownload.classloader.JarInJarClassLoader;
-import dev.vankka.mcdependencydownload.loader.ILoader;
 import net.md_5.bungee.api.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 

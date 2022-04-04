@@ -1,8 +1,8 @@
 package dev.vankka.mcdependencydownload.bukkit.bootstrap;
 
-import dev.vankka.mcdependencydownload.bootstrap.AbstractBootstrap;
-import dev.vankka.mcdependencydownload.classloader.JarInJarClassLoader;
-import dev.vankka.mcdependencydownload.bootstrap.classpath.JarInJarClasspathAppender;
+import dev.vankka.dependencydownload.jarinjar.bootstrap.AbstractBootstrap;
+import dev.vankka.dependencydownload.jarinjar.bootstrap.classpath.JarInJarClasspathAppender;
+import dev.vankka.dependencydownload.jarinjar.classloader.JarInJarClassLoader;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**

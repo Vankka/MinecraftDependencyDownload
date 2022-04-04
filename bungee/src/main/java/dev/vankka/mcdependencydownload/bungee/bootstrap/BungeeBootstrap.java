@@ -1,8 +1,8 @@
 package dev.vankka.mcdependencydownload.bungee.bootstrap;
 
-import dev.vankka.mcdependencydownload.bootstrap.AbstractBootstrap;
-import dev.vankka.mcdependencydownload.classloader.JarInJarClassLoader;
-import dev.vankka.mcdependencydownload.bootstrap.classpath.JarInJarClasspathAppender;
+import dev.vankka.dependencydownload.jarinjar.bootstrap.AbstractBootstrap;
+import dev.vankka.dependencydownload.jarinjar.bootstrap.classpath.JarInJarClasspathAppender;
+import dev.vankka.dependencydownload.jarinjar.classloader.JarInJarClassLoader;
 import net.md_5.bungee.api.plugin.Plugin;
 
 /**
