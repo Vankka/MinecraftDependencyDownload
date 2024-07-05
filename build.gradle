@@ -3,16 +3,8 @@ plugins {
     id 'io.github.gradle-nexus.publish-plugin' version '2.0.0'
 }
 
-version '1.0.0-SNAPSHOT'
-
-nexusPublishing {
-    repositories {
-        sonatype {
-            nexusUrl.set(uri('https://s01.oss.sonatype.org/service/local/'))
-            snapshotRepositoryUrl.set(uri('https://s01.oss.sonatype.org/content/repositories/snapshots/'))
-        }
-    }
-}
+version '1.0.0'
+group = 'dev.vankka'
 
 subprojects {
     apply plugin: 'java'
@@ -28,7 +20,7 @@ subprojects {
         dependencyDownloadVersion = '1.3.1'
     }
 
-    group = 'dev.vankka'
+    group = rootProject.group
     version = rootProject.version
 
     repositories {
@@ -39,6 +31,10 @@ subprojects {
         }
     }
 
+    java {
+        withSourcesJar()
+        withJavadocJar()
+    }
 
     indraSpotlessLicenser {
         licenseHeaderFile(rootProject.file('LICENSE_HEADER'))
@@ -94,3 +90,12 @@ subprojects {
     }
 }
 
+nexusPublishing {
+    repositories {
+        sonatype {
+            nexusUrl.set(uri('https://s01.oss.sonatype.org/service/local/'))
+            snapshotRepositoryUrl.set(uri('https://s01.oss.sonatype.org/content/repositories/snapshots/'))
+            packageGroup = rootProject.group
+        }
+    }
+}
