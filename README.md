@@ -1,5 +1,8 @@
 # MinecraftDependencyDownload
 
+[![Maven Central](https://img.shields.io/maven-central/v/dev.vankka/minecraftdependencydownload-common?label=release)](https://central.sonatype.com/search?q=g%3Adev.vankka+minecraftdependencydownload)
+[![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/dev.vankka/minecraftdependencydownload-common?label=dev&server=https%3A%2F%2Fs01.oss.sonatype.org)](https://s01.oss.sonatype.org/#view-repositories;snapshots~browsestorage~dev/vankka)
+
 Minecraft implementations for [DependencyDownload](https://github.com/Vankka/DependencyDownload)
 
 Heavily inspired by [LuckPerms](https://github.com/lucko/LuckPerms)' dependency management system
