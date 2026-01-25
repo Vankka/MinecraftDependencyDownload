@@ -22,40 +22,33 @@
  * SOFTWARE.
  */
 
-package dev.vankka.mcdependencydownload.bungee.bootstrap;
+package dev.vankka.mcdependencydownload.forge.bootstrap;
 
 import dev.vankka.dependencydownload.jarinjar.bootstrap.AbstractBootstrap;
 import dev.vankka.dependencydownload.jarinjar.bootstrap.classpath.JarInJarClasspathAppender;
 import dev.vankka.dependencydownload.jarinjar.classloader.JarInJarClassLoader;
-import net.md_5.bungee.api.plugin.Plugin;
+import net.minecraftforge.fml.ModContainer;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 /**
- * A bootstrap for Bungee plugins.
+ * A bootstrap for Forge mods.
  */
 @SuppressWarnings("unused") // API
-public abstract class BungeeBootstrap extends AbstractBootstrap implements IBungeeBootstrap {
+public abstract class ForgeBootstrap extends AbstractBootstrap implements IForgeBootstrap {
 
-    private final Plugin plugin;
     private final JarInJarClasspathAppender classpathAppender;
+    private final FMLJavaModLoadingContext context;
 
     /**
-     * Do not modify the parameters if you're using the BungeeLoader.
+     * Do not modify the parameters if you're using the ForgeLoader.
      *
      * @param classLoader the ClassLoader that loaded this class
-     * @param plugin the plugin instance
+     * @param context the mod container instance
      */
-    public BungeeBootstrap(JarInJarClassLoader classLoader, Plugin plugin) {
+    public ForgeBootstrap(JarInJarClassLoader classLoader, FMLJavaModLoadingContext context) {
         super(classLoader);
-        this.plugin = plugin;
+        this.context = context;
         this.classpathAppender = new JarInJarClasspathAppender(classLoader);
-    }
-
-    /**
-     * Gets the {@link Plugin} instance.
-     * @return the {@link Plugin} instance provided by the loader.
-     */
-    public Plugin getPlugin() {
-        return plugin;
     }
 
     /**
@@ -64,5 +57,13 @@ public abstract class BungeeBootstrap extends AbstractBootstrap implements IBung
      */
     public JarInJarClasspathAppender getClasspathAppender() {
         return classpathAppender;
+    }
+
+    /**
+     * Gets the {@link FMLJavaModLoadingContext} instance.
+     * @return the {@link FMLJavaModLoadingContext} instance provided by the loader.
+     */
+    public final FMLJavaModLoadingContext getFMLContext() {
+        return context;
     }
 }

@@ -22,40 +22,36 @@
  * SOFTWARE.
  */
 
-package dev.vankka.mcdependencydownload.bungee.bootstrap;
+package dev.vankka.mcdependencydownload.neoforge.bootstrap;
 
 import dev.vankka.dependencydownload.jarinjar.bootstrap.AbstractBootstrap;
 import dev.vankka.dependencydownload.jarinjar.bootstrap.classpath.JarInJarClasspathAppender;
 import dev.vankka.dependencydownload.jarinjar.classloader.JarInJarClassLoader;
-import net.md_5.bungee.api.plugin.Plugin;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
 
 /**
- * A bootstrap for Bungee plugins.
+ * A bootstrap for NeoForge mods.
  */
 @SuppressWarnings("unused") // API
-public abstract class BungeeBootstrap extends AbstractBootstrap implements IBungeeBootstrap {
+public abstract class NeoForgeBootstrap extends AbstractBootstrap implements INeoForgeBootstrap {
 
-    private final Plugin plugin;
     private final JarInJarClasspathAppender classpathAppender;
+    private final ModContainer modContainer;
+    private final IEventBus eventBus;
 
     /**
-     * Do not modify the parameters if you're using the BungeeLoader.
+     * Do not modify the parameters if you're using the NeoForgeLoader.
      *
      * @param classLoader the ClassLoader that loaded this class
-     * @param plugin the plugin instance
+     * @param modContainer the ModContainer of the mod being loaded
+     * @param eventBus the EventBus of the mod being loaded
      */
-    public BungeeBootstrap(JarInJarClassLoader classLoader, Plugin plugin) {
+    public NeoForgeBootstrap(JarInJarClassLoader classLoader, ModContainer modContainer, IEventBus eventBus) {
         super(classLoader);
-        this.plugin = plugin;
         this.classpathAppender = new JarInJarClasspathAppender(classLoader);
-    }
-
-    /**
-     * Gets the {@link Plugin} instance.
-     * @return the {@link Plugin} instance provided by the loader.
-     */
-    public Plugin getPlugin() {
-        return plugin;
+        this.modContainer = modContainer;
+        this.eventBus = eventBus;
     }
 
     /**
@@ -64,5 +60,21 @@ public abstract class BungeeBootstrap extends AbstractBootstrap implements IBung
      */
     public JarInJarClasspathAppender getClasspathAppender() {
         return classpathAppender;
+    }
+
+    /**
+     * Gets the ModContainer of the mod being loaded.
+     * @return the ModContainer of the mod being loaded
+     */
+    public ModContainer getModContainer() {
+        return modContainer;
+    }
+
+    /**
+     * Gets the EventBus of the mod being loaded.
+     * @return the EventBus of the mod being loaded
+     */
+    public IEventBus getEventBus() {
+        return eventBus;
     }
 }

@@ -4,6 +4,9 @@ pluginManagement {
         maven {
             url = 'https://maven.fabricmc.net/'
         }
+        maven {
+            url = 'https://maven.minecraftforge.net/'
+        }
     }
 }
 
@@ -14,6 +17,8 @@ rootProject.name = 'MinecraftDependencyDownload'
     'bukkit', 'bukkit:loader',
     'bungee', 'bungee:loader',
     'fabric',
+    'forge', 'forge:loader',
+    'neoforge', 'neoforge:loader',
     'velocity'
 ].each {
     include it

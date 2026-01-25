@@ -59,7 +59,7 @@ public abstract class BukkitBootstrap extends AbstractBootstrap implements IBukk
     }
 
     /**
-     * Gets a instance of {@link JarInJarClassLoader} that was created with the {@link JarInJarClassLoader} that loaded this class.
+     * Gets an instance of {@link JarInJarClassLoader} that was created with the {@link JarInJarClassLoader} that loaded this class.
      * @return a {@link JarInJarClassLoader}
      */
     public JarInJarClasspathAppender getClasspathAppender() {

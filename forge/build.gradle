@@ -1,0 +1,20 @@
+plugins {
+    id 'net.minecraftforge.gradle' version '[6.0.36,6.2)'
+}
+
+java {
+    sourceCompatibility = 21
+    targetCompatibility = 21
+}
+
+minecraft {
+    mappings channel: 'official', version: '1.21.11'
+}
+
+dependencies {
+    minecraft "net.minecraftforge:forge:1.21.11-61.0.0"
+
+    api project(':common')
+    compileOnlyApi project(':forge:forge-loader')
+    api 'dev.vankka:dependencydownload-jarinjar-bootstrap:' + dependencyDownloadVersion
+}

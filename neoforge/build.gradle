@@ -1,0 +1,19 @@
+plugins {
+    id 'net.neoforged.moddev' version '2.0.134'
+    id 'java-library'
+}
+
+java {
+    sourceCompatibility = 21
+    targetCompatibility = 21
+}
+
+dependencies {
+    api project(':common')
+    compileOnlyApi project(':neoforge:neoforge-loader')
+    api 'dev.vankka:dependencydownload-jarinjar-bootstrap:' + dependencyDownloadVersion
+}
+
+neoForge {
+    version = "21.11.17-beta"
+}

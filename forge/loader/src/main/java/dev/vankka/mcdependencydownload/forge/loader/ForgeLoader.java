@@ -22,12 +22,14 @@
  * SOFTWARE.
  */
 
-package dev.vankka.mcdependencydownload.bukkit.loader;
+package dev.vankka.mcdependencydownload.forge.loader;
 
+import com.mojang.logging.LogUtils;
 import dev.vankka.dependencydownload.jarinjar.classloader.JarInJarClassLoader;
 import dev.vankka.dependencydownload.jarinjar.loader.ILoader;
-import dev.vankka.mcdependencydownload.bukkit.bootstrap.IBukkitBootstrap;
-import org.bukkit.plugin.java.JavaPlugin;
+import dev.vankka.mcdependencydownload.forge.bootstrap.IForgeBootstrap;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -35,20 +37,23 @@ import java.lang.reflect.Constructor;
 import java.util.Optional;
 
 /**
- * The loader class, the class that extends this should be the plugin.ymls main property.
+ * A loader for Forge mods. Needs to have @Mod annotation on the class.
  */
 @SuppressWarnings("unused") // API
-public abstract class BukkitLoader extends JavaPlugin implements ILoader {
+public abstract class ForgeLoader implements ILoader {
 
     protected final JarInJarClassLoader classLoader;
-    private IBukkitBootstrap bootstrap;
+    private final FMLJavaModLoadingContext ctx;
+    private IForgeBootstrap bootstrap;
 
-    public BukkitLoader() {
+    public ForgeLoader(FMLJavaModLoadingContext ctx) {
         super();
+        this.ctx = ctx;
         classLoader = initialize();
+        FMLCommonSetupEvent.getBus(ctx.getModBusGroup()).addListener(bootstrap::onCommonSetup);
     }
 
-    private Optional<IBukkitBootstrap> bootstrap() {
+    private Optional<IForgeBootstrap> bootstrap() {
         return Optional.ofNullable(bootstrap);
     }
 
@@ -60,36 +65,20 @@ public abstract class BukkitLoader extends JavaPlugin implements ILoader {
 
     @Override
     public final void initiateBootstrap(Class<?> bootstrapClass, @NotNull JarInJarClassLoader classLoader) throws ReflectiveOperationException {
-        Constructor<?> constructor = bootstrapClass.getConstructor(JarInJarClassLoader.class, JavaPlugin.class);
-        bootstrap = (IBukkitBootstrap) constructor.newInstance(classLoader, this);
+        Constructor<?> constructor = bootstrapClass.getConstructor(JarInJarClassLoader.class, FMLJavaModLoadingContext.class);
+        bootstrap = (IForgeBootstrap) constructor.newInstance(classLoader, ctx);
     }
 
     @Override
     public final @NotNull ClassLoader getParentClassLoader() {
-        return getClassLoader();
-    }
-
-    @Override
-    public final void onLoad() {
-        bootstrap().ifPresent(IBukkitBootstrap::onLoad);
-    }
-
-    @Override
-    public final void onEnable() {
-        bootstrap().ifPresent(IBukkitBootstrap::onEnable);
-    }
-
-    @Override
-    public final void onDisable() {
-        bootstrap().ifPresent(IBukkitBootstrap::onDisable);
-        close();
+        return getClass().getClassLoader();
     }
 
     protected void close() {
         try {
             classLoader.close();
         } catch (IOException e) {
-            getLogger().severe("Failed to close JarInJarClassLoader");
+            LogUtils.getLogger().error("Failed to close JarInJarClassLoader");
             e.printStackTrace();
         }
     }
